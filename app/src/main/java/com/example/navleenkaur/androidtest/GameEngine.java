@@ -14,6 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameEngine extends SurfaceView implements Runnable {
     private static final int CAT_STEPS = 1000;
@@ -44,6 +45,8 @@ public class GameEngine extends SurfaceView implements Runnable {
     int SQUARE_WIDTH = 100;
 
     final int CAT_SPEED = 20;
+    final int CAGE_SPEED = 20;
+    final int SPARROW_SPEED = 10;
 
     Square enemy;
 
@@ -68,6 +71,7 @@ public class GameEngine extends SurfaceView implements Runnable {
         this.screenWidth = screenW;
         this.screenHeight = screenH;
 
+        this.bullet = new Square(context, 100, 600, SQUARE_WIDTH);
 
 
         // setup visible game play area variables
@@ -107,6 +111,8 @@ public class GameEngine extends SurfaceView implements Runnable {
 
     public void updateGame() {
 
+
+        //cat movement
         if(movingRight == true) {
             this.cat.setxPosition(this.cat.getxPosition() - CAT_SPEED);
         }
@@ -115,12 +121,25 @@ public class GameEngine extends SurfaceView implements Runnable {
             this.cat.setxPosition(this.cat.getxPosition() + CAT_SPEED);
         }
 
-        // cat hitbox
+        // cat hitbox movement
          this.cat.getHitbox().left = this.cat.getxPosition();
          this.cat.getHitbox().top = this.cat.getyPosition();
          this.cat.getHitbox().right = this.cat.getxPosition() + this.cat.getImage().getWidth();
          this.cat.getHitbox().bottom = this.cat.getyPosition() + this.cat.getImage().getHeight();
 
+        if(movingRight == true) {
+            this.sparrow.setxPosition(this.sparrow.getxPosition() - SPARROW_SPEED);
+        }
+
+        else if (movingRight == false) {
+            Random random = new Random();
+        }
+
+        // cat hitbox movement
+        this.sparrow.getHitbox().left = this.sparrow.getxPosition();
+        this.sparrow.getHitbox().top = this.sparrow.getyPosition();
+        this.sparrow.getHitbox().right = this.sparrow.getxPosition() + this.sparrow.getImage().getWidth();
+        this.sparrow.getHitbox().bottom = this.sparrow.getyPosition() + this.sparrow.getImage().getHeight();
 
     }
 
@@ -185,6 +204,11 @@ public class GameEngine extends SurfaceView implements Runnable {
             Rect r1 = cat.getHitbox();
             paintbrush.setStyle(Paint.Style.STROKE);
             canvas.drawRect(r1, paintbrush);
+
+            // hitbox on sparrow
+            Rect r2 = sparrow.getHitbox();
+            paintbrush.setStyle(Paint.Style.STROKE);
+            canvas.drawRect(r2, paintbrush);
 
 
 
