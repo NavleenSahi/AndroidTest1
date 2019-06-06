@@ -46,6 +46,7 @@ public class GameEngine extends SurfaceView implements Runnable {
     Sprite player;
     Sprite sparrow;
     Sprite cat;
+    Sprite cage;
 
     ArrayList<Square> bullets = new ArrayList<Square>();
 
@@ -78,6 +79,8 @@ public class GameEngine extends SurfaceView implements Runnable {
         this.cat = new Sprite(this.getContext(), 1500, 700, R.drawable.cat64);
     }
 
+
+
     @Override
     public void run() {
         while (gameIsRunning == true) {
@@ -89,6 +92,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
     // Game Loop methods
     public void updateGame() {
+
     }
 
 
@@ -110,6 +114,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
             // set the game's background color
             canvas.drawColor(Color.argb(255,255,255,255));
+
 
             // setup stroke style and width
             paintbrush.setStyle(Paint.Style.FILL);
@@ -137,6 +142,9 @@ public class GameEngine extends SurfaceView implements Runnable {
             //3. cat
             canvas.drawBitmap(this.cat.getImage(), this.cat.getxPosition(), this.cat.getyPosition(), paintbrush);
 
+            // 4. cage
+            canvas.drawRect(1700, 150, 1500, 50, paintbrush);
+
             // --------------------------------------------------------
             // draw hitbox on player
             // --------------------------------------------------------
@@ -144,6 +152,7 @@ public class GameEngine extends SurfaceView implements Runnable {
             paintbrush.setStyle(Paint.Style.STROKE);
             canvas.drawRect(r, paintbrush);
 
+            // hitbox on cat
             Rect r1 = cat.getHitbox();
             paintbrush.setStyle(Paint.Style.STROKE);
             canvas.drawRect(r1, paintbrush);

@@ -1,6 +1,7 @@
 package com.example.navleenkaur.androidtest;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class Square {
@@ -8,9 +9,11 @@ public class Square {
     private int xPosition;
     private int yPosition;
     private int width;
+    private int height;
 
     // make the hitbox
     Rect hitbox;
+
 
     // vector variables
     double xn = 0;
@@ -29,6 +32,8 @@ public class Square {
         );
 
     }
+
+
 
     public Rect getHitbox() {
         return hitbox;
