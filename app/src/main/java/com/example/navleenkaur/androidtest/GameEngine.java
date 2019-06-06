@@ -16,7 +16,7 @@ import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameEngine extends SurfaceView implements Runnable {
+public class GameEngine<Distance_FromWall> extends SurfaceView implements Runnable {
     private static final int CAT_STEPS = 1000;
     private final String TAG = "SPARROW";
 
@@ -59,6 +59,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
     // GAME STATS
     int score = 0;
+    Distance_FromWall = 10;
 
     public GameEngine(Context context, int screenW, int screenH) {
         super(context);
@@ -102,6 +103,7 @@ public class GameEngine extends SurfaceView implements Runnable {
     // Game Loop methods
 
 
+    boolean movingLeft = true;
     boolean movingRight = true;
     final int DISTANCE_RIGHT = 50;
 
@@ -140,6 +142,27 @@ public class GameEngine extends SurfaceView implements Runnable {
         this.sparrow.getHitbox().top = this.sparrow.getyPosition();
         this.sparrow.getHitbox().right = this.sparrow.getxPosition() + this.sparrow.getImage().getWidth();
         this.sparrow.getHitbox().bottom = this.sparrow.getyPosition() + this.sparrow.getImage().getHeight();
+
+        if (movingLeft == true) {
+            this.cat.setxPosition(this.cat.getxPosition() - CAT_SPEED);
+            this.cat.hitbox.left = this.cat.hitbox.left - CAT_SPEED;
+            this.cat.hitbox.right = this.cat.hitbox.right - CAT_SPEED;
+        } else {
+
+
+            this.cat.setxPosition(this.cat.getxPosition() + CAT_SPEED);
+            this.cat.hitbox.left = this.cat.hitbox.left + CAT_SPEED;
+            this.cat.hitbox.right = this.cat.hitbox.right + CAT_SPEED;
+
+        }
+        if (this.cat.getxPosition()< this.VISIBLE_LEFT + Distance_FromWall)
+        {
+            movingLeft = false;
+        }
+        if(this.cat.getxPosition()> this.VISIBLE_RIGHT - Distance_FromWall )
+        {
+            movingLeft = true;
+        }
 
     }
 
