@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,6 +16,7 @@ import android.view.SurfaceView;
 import java.util.ArrayList;
 
 public class GameEngine extends SurfaceView implements Runnable {
+    private static final int CAT_STEPS = 1000;
     private final String TAG = "SPARROW";
 
     // game thread variables
@@ -40,6 +42,8 @@ public class GameEngine extends SurfaceView implements Runnable {
     // SPRITES
     Square bullet;
     int SQUARE_WIDTH = 100;
+
+    final int CAT_SPEED = 20;
 
     Square enemy;
 
@@ -80,7 +84,6 @@ public class GameEngine extends SurfaceView implements Runnable {
     }
 
 
-
     @Override
     public void run() {
         while (gameIsRunning == true) {
@@ -90,8 +93,34 @@ public class GameEngine extends SurfaceView implements Runnable {
         }
     }
 
+
+
     // Game Loop methods
+
+
+    boolean movingRight = true;
+    final int DISTANCE_RIGHT = 50;
+
+    public void updatePosition() {
+
+    }
+
     public void updateGame() {
+
+        if(movingRight == true) {
+            this.cat.setxPosition(this.cat.getxPosition() - CAT_SPEED);
+        }
+
+        else if (movingRight == false) {
+            this.cat.setxPosition(this.cat.getxPosition() + CAT_SPEED);
+        }
+
+        // cat hitbox
+         this.cat.getHitbox().left = this.cat.getxPosition();
+         this.cat.getHitbox().top = this.cat.getyPosition();
+         this.cat.getHitbox().right = this.cat.getxPosition() + this.cat.getImage().getWidth();
+         this.cat.getHitbox().bottom = this.cat.getyPosition() + this.cat.getImage().getHeight();
+
 
     }
 
@@ -156,6 +185,7 @@ public class GameEngine extends SurfaceView implements Runnable {
             Rect r1 = cat.getHitbox();
             paintbrush.setStyle(Paint.Style.STROKE);
             canvas.drawRect(r1, paintbrush);
+
 
 
             // --------------------------------------------------------
